@@ -1,0 +1,449 @@
+
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Маршрут по Республике Тыва - TyvaTravelPlanner Pro</title>
+            <style>
+                /* Основные стили */
+                body { 
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f8f9fa;
+                    color: #333;
+                    line-height: 1.6;
+                }
+
+                .container { 
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+
+                /* Шапка */
+                .header { 
+                    background: linear-gradient(135deg, #2c3e50, #3498db);
+                    color: white;
+                    padding: 40px 20px;
+                    text-align: center;
+                    border-radius: 0 0 20px 20px;
+                    margin-bottom: 40px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                }
+
+                .header h1 { 
+                    margin: 0;
+                    font-size: 2.5em;
+                    font-weight: 300;
+                }
+
+                .header .subtitle { 
+                    margin-top: 10px;
+                    font-size: 1.2em;
+                    opacity: 0.9;
+                }
+
+                /* Секции */
+                .section { 
+                    background: white;
+                    margin-bottom: 30px;
+                    padding: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                    border-left: 5px solid #3498db;
+                }
+
+                .section h2 { 
+                    color: #2c3e50;
+                    margin-top: 0;
+                    padding-bottom: 15px;
+                    border-bottom: 2px solid #eee;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                /* Карточки */
+                .card { 
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                    border: 1px solid #e9ecef;
+                }
+
+                .card h3 { 
+                    color: #2c3e50;
+                    margin-top: 0;
+                }
+
+                /* Статистика в сетке */
+                .stats-grid { 
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 20px;
+                    margin: 20px 0;
+                }
+
+                .stat-item { 
+                    background: linear-gradient(135deg, #3498db, #2c3e50);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    text-align: center;
+                }
+
+                .stat-value { 
+                    font-size: 2em;
+                    font-weight: bold;
+                    margin: 10px 0;
+                }
+
+                .stat-label { 
+                    font-size: 0.9em;
+                    opacity: 0.9;
+                }
+
+                /* Дни */
+                .day { 
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 25px;
+                    margin-bottom: 25px;
+                    border-left: 4px solid #e74c3c;
+                }
+
+                .day-header { 
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    padding-bottom: 15px;
+                    border-bottom: 1px solid #dee2e6;
+                }
+
+                .day-title { 
+                    font-size: 1.5em;
+                    color: #2c3e50;
+                    margin: 0;
+                }
+
+                .day-stats { 
+                    display: flex;
+                    gap: 20px;
+                    color: #6c757d;
+                }
+
+                /* Места */
+                .place { 
+                    background: white;
+                    border-radius: 8px;
+                    padding: 20px;
+                    margin-bottom: 15px;
+                    border: 1px solid #e9ecef;
+                }
+
+                .place h4 { 
+                    color: #2c3e50;
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+
+                .place-meta { 
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 15px;
+                    margin-bottom: 10px;
+                    color: #6c757d;
+                    font-size: 0.9em;
+                }
+
+                /* Цветовые индикаторы */
+                .budget-good { color: #27ae60; font-weight: bold; }
+                .budget-warning { color: #f39c12; font-weight: bold; }
+                .budget-danger { color: #e74c3c; font-weight: bold; }
+
+                /* Списки */
+                .tips-list { 
+                    list-style-type: none;
+                    padding: 0;
+                }
+
+                .tips-list li { 
+                    padding: 10px 0;
+                    padding-left: 30px;
+                    position: relative;
+                }
+
+                .tips-list li:before {
+                    content: "✓";
+                    position: absolute;
+                    left: 0;
+                    color: #27ae60;
+                    font-weight: bold;
+                }
+
+                /* Подвал */
+                .footer { 
+                    text-align: center;
+                    margin-top: 50px;
+                    padding: 30px;
+                    background: #2c3e50;
+                    color: white;
+                    border-radius: 15px 15px 0 0;
+                }
+
+                /* Адаптивность */
+                @media (max-width: 768px) {
+                    .stats-grid { grid-template-columns: 1fr; }
+                    .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+                    .day-stats { flex-wrap: wrap; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <div class="container">
+                    <h1>🌄 Tyva Travel Planner Pro</h1>
+                    <div class="subtitle">Персонализированный маршрут по Республике Тыва</div>
+                    <div style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                        Создано: 25.12.2025 10:46
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <!-- Секция параметров -->
+                <div class="section">
+                    <h2>📋 Параметры путешествия</h2>
+                    <div class="stats-grid">
+                        <div class="card">
+                            <h3>Основные</h3>
+                            <p><strong>Дней:</strong> 3</p>
+                            <p><strong>Бюджет:</strong> 10,000 руб</p>
+                            <p><strong>Сезон:</strong> Лето</p>
+                            <p><strong>Комфорт:</strong> средний</p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Персонализация</h3>
+                            <p><strong>Тип:</strong> Пара</p>
+                            <p><strong>Транспорт:</strong> Личный автомобиль</p>
+                            <p><strong>Активность:</strong> Умеренный</p>
+                            <p><strong>Питание:</strong> Кафе и рестораны</p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Категории интересов</h3>
+                            <p>музей, природа</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Секция статистики -->
+                <div class="section">
+                    <h2>📊 Статистика маршрута</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Дней</div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="stat-value">6</div>
+                            <div class="stat-label">Мест</div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="stat-value">17 ч</div>
+                            <div class="stat-label">Время</div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="stat-value">200 ₽</div>
+                            <div class="stat-label">Стоимость</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Финансовый отчёт</h3>
+                        <p><strong>Посещения:</strong> 200 руб</p>
+                        <p><strong>Питание (Кафе и рестораны):</strong> 3,000 руб</p>
+                        <p><strong>Всего расходов:</strong> 3,200 руб</p>
+                        <p><strong>Общий бюджет:</strong> 10,000 руб</p>
+                        <p><strong>Остаток:</strong> 
+                            <span class="budget-good">
+                                6,800 руб
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Секция плана по дням -->
+                <div class="section">
+                    <h2>📅 План по дням</h2>
+        
+                    <div class="day">
+                        <div class="day-header">
+                            <h3 class="day-title">День 1</h3>
+                            <div class="day-stats">
+                                <span>💰 0 руб</span>
+                                <span>⏱️ 4 часов</span>
+                                <span>📍 1 мест</span>
+                                <span>🍽️ 1,000 руб</span>
+                            </div>
+                        </div>
+            
+                        <div class="place">
+                            <h4>Гора Хайыракан</h4>
+                            <div class="place-meta">
+                                <span>🏷️ природа</span>
+                                <span>📍 Улуг-Хемский район</span>
+                                <span>⏱️ 4 часа</span>
+                                <span>💰 0 руб</span>
+                            </div>
+                            <p>Священная гора высотой 1042 м. По легендам, обладает особой энергетикой и является местом силы.</p>
+                        </div>
+                
+                    </div>
+            
+                    <div class="day">
+                        <div class="day-header">
+                            <h3 class="day-title">День 2</h3>
+                            <div class="day-stats">
+                                <span>💰 0 руб</span>
+                                <span>⏱️ 6 часов</span>
+                                <span>📍 2 мест</span>
+                                <span>🍽️ 1,000 руб</span>
+                            </div>
+                        </div>
+            
+                        <div class="place">
+                            <h4>Озеро Торе-Холь</h4>
+                            <div class="place-meta">
+                                <span>🏷️ природа</span>
+                                <span>📍 Эрзинский район</span>
+                                <span>⏱️ 5 часа</span>
+                                <span>💰 0 руб</span>
+                            </div>
+                            <p>Живописное пресноводное озеро на границе с Монголией. Идеально для кемпинга, фотографирования и купания.</p>
+                        </div>
+                
+                        <div class="place">
+                            <h4>Озеро Хадын</h4>
+                            <div class="place-meta">
+                                <span>🏷️ природа</span>
+                                <span>📍 Тандинский район</span>
+                                <span>⏱️ 1 часа</span>
+                                <span>💰 0 руб</span>
+                            </div>
+                            <p>Дерево возрастом более 1000 лет. Место паломничества и проведения обрядов.</p>
+                        </div>
+                
+                    </div>
+            
+                    <div class="day">
+                        <div class="day-header">
+                            <h3 class="day-title">День 3</h3>
+                            <div class="day-stats">
+                                <span>💰 200 руб</span>
+                                <span>⏱️ 7 часов</span>
+                                <span>📍 3 мест</span>
+                                <span>🍽️ 1,000 руб</span>
+                            </div>
+                        </div>
+            
+                        <div class="place">
+                            <h4>Река Енисей (Улуг-Хем)</h4>
+                            <div class="place-meta">
+                                <span>🏷️ природа</span>
+                                <span>📍 по всей республике</span>
+                                <span>⏱️ 3 часа</span>
+                                <span>💰 0 руб</span>
+                            </div>
+                            <p>Великая сибирская река. Места для рыбалки, рафтинга и пикников.</p>
+                        </div>
+                
+                        <div class="place">
+                            <h4>Теве-Хая</h4>
+                            <div class="place-meta">
+                                <span>🏷️ природа</span>
+                                <span>📍 Тес-Хемский район</span>
+                                <span>⏱️ 2 часа</span>
+                                <span>💰 0 руб</span>
+                            </div>
+                            <p>Природное скальное образование, напоминающее спящего льва. Популярное место для фотосессий.</p>
+                        </div>
+                
+                        <div class="place">
+                            <h4>Музей политических репрессий</h4>
+                            <div class="place-meta">
+                                <span>🏷️ музей</span>
+                                <span>📍 Кызыл</span>
+                                <span>⏱️ 2 часа</span>
+                                <span>💰 200 руб</span>
+                            </div>
+                            <p>Мемориальный комплекс, посвященный жертвам политических репрессий в Туве.</p>
+                        </div>
+                
+                    </div>
+            
+                </div>
+
+                <!-- Секция рекомендаций -->
+                <div class="section">
+                    <h2>💡 Персональные рекомендации</h2>
+                    <div class="card">
+                        <h3>Для Пара путешественников</h3>
+                        <ul class="tips-list">
+        
+                            <li>Забронируйте уютное жильё заранее</li>
+                            <li>Посетите романтические места для фото</li>
+                            <li>Попробуйте ужин в ресторане с национальной кухней</li>
+                            <li>Запланируйте время для отдыха вдвоём</li>
+            
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>По транспорту (Личный автомобиль)</h3>
+                        <ul class="tips-list">
+        
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Секция контактов -->
+                <div class="section">
+                    <h2>🚨 Экстренные контакты</h2>
+                    <div class="stats-grid">
+                        <div class="card">
+                            <h3>Экстренные службы</h3>
+                            <p>Скорая помощь: <strong>103 или 112</strong></p>
+                            <p>Полиция: <strong>102 или 112</strong></p>
+                            <p>МЧС: <strong>101 или 112</strong></p>
+                            <p>Единая служба спасения: <strong>112</strong></p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Полезные контакты</h3>
+                            <p>Туристическая информация: <strong>+7 (394-22) 2-22-22</strong></p>
+                            <p>Такси Кызыл: <strong>+7 (394-22) 3-33-33</strong></p>
+                            <p>Больница скорой помощи: <strong>+7 (394-22) 5-55-55</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="container">
+                    <p>✨ Приятного путешествия по удивительной Республике Тыва!</p>
+                    <p>Создано с помощью TyvaTravelPlanner Pro v2.0</p>
+                    <p>Контакт: tyva-travel@example.com | Сайт: www.tyva-travel-planner.ru</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        
